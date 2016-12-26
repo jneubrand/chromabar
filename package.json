@@ -1,0 +1,20 @@
+{
+  "name": "chromabar",
+  "version": "1.0.0",
+  "description": "tiny electron menubar item for hue",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron index.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "electron-default-menu": "^1.0.0",
+    "kelvin-to-rgb": "^1.0.2",
+    "menubar": "^5.2.0",
+    "xyz-utils": "^0.5.2"
+  },
+  "devDependencies": {
+    "electron-prebuilt": "^1.4.13"
+  }
+}

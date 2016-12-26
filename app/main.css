@@ -1,0 +1,64 @@
+html, body {
+    margin: 0;
+    font-family: BlinkMacSystemFont, Arial;
+    color: gray;
+}
+
+main, main section {
+    display: flex;
+    flex-direction: column;
+}
+
+main section {
+    flex-direction: row;
+}
+
+section button {
+    flex-basis: 1px;
+    flex-grow: 1;
+    transition: flex-grow .2s ease;
+}
+
+section button.selected {
+    flex-grow: 1.5;
+}
+
+button {
+    background: transparent;
+    border: none;
+    padding: 1rem 0;
+    font-size: 1rem;
+    outline: none;
+    font-weight: 100;
+    position: relative;
+    color: white;
+    transition: font-weight .2s linear, color .2s linear;
+}
+
+button.selected {
+    font-weight: 900;
+    color: black;
+}
+
+button.on {
+    background: white;
+    color: rgba(0, 0, 0, 0.9);
+}
+
+button.off {
+    background: black;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.swatch {
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    bottom: calc(100% - 3px);
+    width: 100%;
+    transition: top .2s ease, bottom .2s ease;
+}
+
+button.selected .swatch {
+    bottom: 0;
+}
