@@ -1,4 +1,3 @@
-const xyz = n => require('xyz-utils').toRGB(require('xyz-utils').fromxyY(n))
 const kelvin = require('kelvin-to-rgb')
 const electron = require('electron')
 const request = require('request')

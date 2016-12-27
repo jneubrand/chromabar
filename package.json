@@ -11,8 +11,7 @@
   "dependencies": {
     "electron-default-menu": "^1.0.0",
     "kelvin-to-rgb": "^1.0.2",
-    "menubar": "^5.2.0",
-    "xyz-utils": "^0.5.2"
+    "menubar": "^5.2.0"
   },
   "devDependencies": {
     "electron-prebuilt": "^1.4.13"
