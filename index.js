@@ -8,8 +8,8 @@ var m = menubar({
     'icon': path.join(__dirname, 'IconTemplate.png'),
     'width': 130,
     'height': 100,
-    'frame': false
-    // 'resizable': false
+    'frame': false,
+    'resizable': false
 })
 
 m.on('ready', () => {
