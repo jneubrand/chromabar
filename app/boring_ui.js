@@ -107,7 +107,7 @@ function lightstate2rgb(a) {
         let k = 1/(a.ct) * 1000000
         d = kelvin(k + 2000)
         for (let i in d) {
-            d[i] = d[i] * a.bri / 255
+            d[i] = d[i] * (a.bri / 512 + .5)
         }
     } else if ('xy' in a) {
         let x = a.xy[0], y = a.xy[1], z = 1 - x - y,
@@ -126,7 +126,18 @@ function lightstate2rgb(a) {
     for (let i in d) {
         d[i] = Math.min(Math.max(Math.round(d[i]), 0), 255)
     }
-    return 'rgb(' + d.join(',') + ')'
+    return d
+}
+
+function colors2order(colors) {
+    // - Prioritize colors with more similar red/green
+    // - Prioritize colors with less blue
+    // - Prioritize colors with higher brightness
+    // This isn't anywhere near perfect or even good.
+    return Math.round((  2000 * (colors[0][0] + colors[0][1] + colors[0][2])
+                       +   10 * Math.log(colors[0][0] - colors[0][1])
+                       -   10 * Math.log(colors[0][1] - colors[0][2])
+                       -   10 * Math.log(colors[0][2] - colors[0][0])))
 }
 
 function sceneButton(classes, id, onid, offid, name, data, baseurl) {
@@ -153,6 +164,7 @@ function sceneButton(classes, id, onid, offid, name, data, baseurl) {
     if (['Off', 'On'].indexOf(name) == -1) {
         request.get(baseurl + '/scenes/' + data.id, { json: true }, (e, r, b) => {
             let colors = [],
+                values = [],
                 hadxy = false
             for (let light in b.lightstates)
                 if ('xy' in b.lightstates[light])
@@ -160,9 +172,12 @@ function sceneButton(classes, id, onid, offid, name, data, baseurl) {
             for (let light in b.lightstates) {
                 if (hadxy && !('xy' in b.lightstates[light]))
                     continue
-                colors.push(lightstate2rgb(b.lightstates[light]))
+                let vals = lightstate2rgb(b.lightstates[light])
+                values.push(vals)
+                colors.push('rgb(' + vals.join(',') + ')')
             }
             swatch.style.background = 'linear-gradient(to right, ' + colors + ')'
+            button.style.order = 100000 - colors2order(values)
         })
     }
     if (name == 'Off') {
